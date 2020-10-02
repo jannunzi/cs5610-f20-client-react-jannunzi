@@ -8,7 +8,9 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <div className="container">
-    <CourseListComponent instructor="Jose Annunziato" term="Fall 2020"/>
+    <CourseListComponent
+      instructor="Jose Annunziato"
+      term="Fall 2020"/>
   </div>,
   document.getElementById('root')
 );

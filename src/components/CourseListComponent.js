@@ -1,43 +1,78 @@
 import React from "react";
 import CourseRowComponent from "./CourseRowComponent";
+import {findAllCourses, updateCourse, deleteCourse, createCourse} from "../services/CourseService";
 
-const courses = [
-  {
-    _id: "123",
-    title: "CS5610",
-    owner: "me",
-    lastOpened: "yesterday"
-  },
-  {
-    _id: "234",
-    title: "CS4550",
-    owner: "me",
-    lastOpened: "yesterday"
-  },
-  {
-    _id: "345",
-    title: "CS5200",
-    owner: "me",
-    lastOpened: "yesterday"
-  },
-  {
-    _id: "456",
-    title: "CS3200",
-    owner: "me",
-    lastOpened: "yesterday"
-  },
-]
+class CourseListComponent extends React.Component {
 
-const CourseListComponent = ({term, instructor}) =>
-  <div>
-    <h1>Course List (For {instructor}) {term}</h1>
-    <table className="table">
-      {
-        courses.map(item =>
-          <CourseRowComponent item={item}/>
-        )
-      }
-    </table>
-  </div>
+  state = {
+    courses: [],
+    courseBeingEdited: {}
+  }
+
+  componentDidMount() {
+    findAllCourses()
+      .then(courses => {
+        this.setState({
+            courses: courses
+          })
+      })
+  }
+
+  deleteCourse = (course) => {
+    deleteCourse(course._id)
+      .then(status => this.setState(prevState =>({
+          courses: prevState.courses.filter(c => c._id !== course._id)
+        })
+      ))
+      .catch(error => {
+
+      })
+  }
+
+  addCourse = () => {
+    const newCourse = {
+      title: "New Course",
+      owner: "me",
+      modified: (new Date()).toDateString()
+    }
+
+    createCourse(newCourse)
+      .then(actualCourse => this.setState(prevState => ({
+        courses: [
+          ...prevState.courses, actualCourse
+        ]
+      })))
+  }
+
+  editCourse = (course) => {
+    this.setState({
+      courseBeingEdited: course
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Course List (For {this.props.instructor}) {this.props.term}</h1>
+        <table className="table">
+          {
+            this.state.courses.map(course =>
+              <CourseRowComponent
+                courseBeingEdited={this.state.courseBeingEdited}
+                editCourse={this.editCourse}
+                deleteCourse={this.deleteCourse}
+                course={course}/>
+            )
+          }
+        </table>
+        <button
+          onClick={this.addCourse}
+          className="btn btn-success">
+          Add Course
+        </button>
+      </div>
+    );
+  }
+}
 
 export default CourseListComponent

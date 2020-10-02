@@ -1,13 +1,30 @@
 import React from "react";
 
-const CourseRowComponent = ({item}) =>
+const CourseRowComponent = ({course, deleteCourse, editCourse, courseBeingEdited}) =>
   <tr>
-    <td>{item.title}</td>
-    <td>{item.owner}</td>
-    <td>{item.lastOpened}</td>
     <td>
-      <button className="btn btn-danger">Delete</button>
-      <button className="btn btn-primary">Edit</button>
+      {
+        course === courseBeingEdited &&
+        <input
+          className="form-control"
+          value={courseBeingEdited.title}/>
+      }
+      {
+        course !== courseBeingEdited &&
+        <label>{course.title}</label>
+      }
+    </td>
+    <td>{course.owner}</td>
+    <td>{course.modified}</td>
+    <td>
+      <button
+        onClick={() => deleteCourse(course)}
+        className="btn btn-danger">
+        Delete
+      </button>
+      <button
+        onClick={() => editCourse(course)}
+        className="btn btn-primary">Edit</button>
     </td>
   </tr>
 
