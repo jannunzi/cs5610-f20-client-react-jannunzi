@@ -1,32 +1,61 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {updateCourse} from "../services/CourseService";
 
-const CourseRowComponent = ({course, deleteCourse, editCourse, courseBeingEdited}) =>
-  <tr>
-    <td>
-      {
-        course === courseBeingEdited &&
-        <input
-          className="form-control"
-          value={courseBeingEdited.title}/>
-      }
-      {
-        course !== courseBeingEdited &&
-        <Link to={`/edit/${course._id}`}>{course.title} {course._id}</Link>
-      }
-    </td>
-    <td>{course.owner}</td>
-    <td>{course.modified}</td>
-    <td>
-      <button
-        onClick={() => deleteCourse(course)}
-        className="btn btn-danger">
-        Delete
-      </button>
-      <button
-        onClick={() => editCourse(course)}
-        className="btn btn-primary">Edit</button>
-    </td>
-  </tr>
+const courseBeingEdited = false
+const editCourse = () => {}
 
-export default CourseRowComponent
+export default class CourseRowComponent extends React.Component {
+  state = {
+    editing: false,
+    course: this.props.course
+  }
+  render() {
+    return(
+      <tr>
+        <td>
+          {
+            this.state.editing &&
+            <input
+              className="form-control"
+              onChange={(event) => {
+                const newTitle = event.target.value
+                this.setState(prevState => ({
+                  course: {...prevState.course, title: newTitle}
+                }))}
+              }
+              value={this.state.course.title}/>
+          }
+          {
+            !this.state.editing &&
+            <Link to={`/edit/${this.props.course._id}`}>{this.props.course.title} {this.props.course._id}</Link>
+          }
+        </td>
+        <td>{this.props.course.owner}</td>
+        <td>{this.props.course.modified}</td>
+        <td>
+          <button
+            onClick={() => this.props.deleteCourse(this.props.course)}
+            className="btn btn-danger">
+            Delete
+          </button>
+          {
+            !this.state.editing &&
+            <button
+              onClick={() => this.setState({editing: true})}
+              className="btn btn-primary">Edit</button>
+          }
+          {
+            this.state.editing &&
+            <button
+              onClick={() => {
+                updateCourse(this.state.course._id, this.state.course)
+                  .then(status => this.setState({editing: false}))
+              }}
+              className="btn btn-primary">OK</button>
+          }
+        </td>
+      </tr>
+    )
+  }
+}

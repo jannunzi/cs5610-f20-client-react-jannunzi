@@ -58,8 +58,6 @@ class CourseListComponent extends React.Component {
           {
             this.state.courses.map(course =>
               <CourseRowComponent
-                courseBeingEdited={this.state.courseBeingEdited}
-                editCourse={this.editCourse}
                 deleteCourse={this.deleteCourse}
                 course={course}/>
             )
