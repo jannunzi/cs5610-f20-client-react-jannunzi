@@ -1,6 +1,10 @@
 
 const url = "https://wbdv-generic-server.herokuapp.com/api/jannunzi/courses"
 
+export const findCourseById = (courseId) =>
+  fetch(`${url}/${courseId}`)
+    .then(response => response.json())
+
 export const findAllCourses = () =>
   fetch(url)
     .then(response => response.json())

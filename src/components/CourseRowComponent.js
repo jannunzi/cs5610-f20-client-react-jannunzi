@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 const CourseRowComponent = ({course, deleteCourse, editCourse, courseBeingEdited}) =>
   <tr>
@@ -11,7 +12,7 @@ const CourseRowComponent = ({course, deleteCourse, editCourse, courseBeingEdited
       }
       {
         course !== courseBeingEdited &&
-        <label>{course.title}</label>
+        <Link to={`/edit/${course._id}`}>{course.title} {course._id}</Link>
       }
     </td>
     <td>{course.owner}</td>
