@@ -8,29 +8,29 @@ import * as serviceWorker from './serviceWorker';
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
-import {BrowserRouter, Link, Route} from "react-router-dom";
 import CourseEditorComponent from "./components/CourseEditorComponent";
+import {CourseManagerComponent} from "./components/CourseManagerComponent";
+import HelloContainer from "./containers/HelloContainer";
+import {combineReducers, createStore} from "redux";
+import {Provider} from "react-redux";
+import Counter from "./components/Counter";
+import CounterContainer from "./containers/CounterContainer";
+import fsm from "./reducers/fsm"
+import widgetsReducer from "./reducers/widgetsReducer";
+
+
+const reducers = combineReducers({
+  fsm, widgetsReducer
+})
+const store = createStore(reducers)
 
 ReactDOM.render(
-  <BrowserRouter>
-      <div className="container">
-        <Link to="/login">Login</Link> |
-        <Link to="/register">Register</Link> |
-        <Link to="/profile">Profile</Link> |
-          <Link to="/courses">Courses</Link> |
-          <Link to="/edit">Editor</Link>
-          <Route path="/login" exact component={Login}/>
-          <Route path="/register" exact component={Register}/>
-          <Route path="/profile" exact component={Profile}/>
-          <Route path="/courses" exact>
-              <CourseListComponent instructor="Jose"/>
-          </Route>
-          <Route
-            path="/edit/:courseId"
-            exact
-            component={CourseEditorComponent}/>
-      </div>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <CourseManagerComponent/>
+    <HelloContainer/>
+    <CounterContainer/>
+  </Provider>
+    ,
   document.getElementById('root')
 );
 
