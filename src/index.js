@@ -17,10 +17,11 @@ import Counter from "./components/Counter";
 import CounterContainer from "./containers/CounterContainer";
 import fsm from "./reducers/fsm"
 import widgetsReducer from "./reducers/widgetsReducer";
-
+import moduleReducer from "./reducers/moduleReducer";
+import courseReducer from "./reducers/courseReducer";
 
 const reducers = combineReducers({
-  fsm, widgetsReducer
+  fsm, widgetsReducer, moduleReducer, courseReducer
 })
 const store = createStore(reducers)
 
