@@ -19,19 +19,18 @@ import fsm from "./reducers/fsm"
 import widgetsReducer from "./reducers/widgetsReducer";
 import moduleReducer from "./reducers/moduleReducer";
 import courseReducer from "./reducers/courseReducer";
+import {lessonReducer} from "./reducers/lessonReducer";
+import "font-awesome/css/font-awesome.min.css";
 
 const reducers = combineReducers({
-  fsm, widgetsReducer, moduleReducer, courseReducer
+  fsm, widgetsReducer, moduleReducer, courseReducer, lessonReducer
 })
 const store = createStore(reducers)
 
 ReactDOM.render(
   <Provider store={store}>
     <CourseManagerComponent/>
-    <HelloContainer/>
-    <CounterContainer/>
-  </Provider>
-    ,
+  </Provider>,
   document.getElementById('root')
 );
 

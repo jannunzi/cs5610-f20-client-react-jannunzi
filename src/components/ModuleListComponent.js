@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import moduleService from "../services/ModuleService"
+import {Link} from "react-router-dom";
 
 const ModuleListComponent = (
   {
@@ -26,9 +27,11 @@ const ModuleListComponent = (
               !module.editing &&
                 <span>
                   <button onClick={() => edit(module)}>
-                    Edit
+                    <i className="fa fa-pencil"></i>
                   </button>
-                  {module.title}
+                  <Link to={`/edit/${course._id}/modules/${module._id}`}>
+                    {module.title}
+                  </Link>
                 </span>
             }
             {
@@ -74,7 +77,8 @@ const propertyToDispatchMapper = (dispatch) => ({
   edit: (module) =>
     moduleService.updateModule(module._id, {
       ...module, editing: true
-    }).then(status => dispatch({
+    }).then(status =>
+      dispatch({
       type: "UPDATE_MODULE",
       module: {...module, editing: true}
     })),

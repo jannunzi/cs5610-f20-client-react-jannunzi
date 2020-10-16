@@ -1,5 +1,5 @@
 
-const url = "https://wbdv-generic-server.herokuapp.com/api/jannunzi/courses"
+const url = "https://wbdv-generic-server.herokuapp.com/api/jannunzi2/courses"
 
 export const findCourseById = (courseId) =>
   fetch(`${url}/${courseId}`)

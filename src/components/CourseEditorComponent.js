@@ -5,12 +5,26 @@ import WidgetList from "./WidgetList";
 import ModuleListComponent from "./ModuleListComponent";
 import {connect} from "react-redux";
 import moduleService from "../services/ModuleService"
+import lessonService from "../services/LessonService"
+import LessonTabs from "./LessonTabsComponent";
 
 class CourseEditorComponent extends React.Component {
 
   componentDidMount() {
-    this.props.findCourseById(this.props.match.params.courseId)
-    this.props.findModulesForCourse(this.props.match.params.courseId)
+    const courseId = this.props.match.params.courseId
+    const moduleId = this.props.match.params.moduleId
+    this.props.findCourseById(courseId)
+    this.props.findModulesForCourse(courseId)
+    if(moduleId) {
+      this.props.findLessonsForModule(moduleId)
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const moduleId = this.props.match.params.moduleId
+    if(moduleId !== prevProps.match.params.moduleId) {
+      this.props.findLessonsForModule(moduleId)
+    }
   }
 
   render() {
@@ -22,7 +36,7 @@ class CourseEditorComponent extends React.Component {
             <ModuleListComponent/>
           </div>
           <div className="col-8">
-            <h1>Lessons</h1>
+            <LessonTabs/>
             <h1>Topics</h1>
             <WidgetList/>
           </div>
@@ -46,7 +60,14 @@ const propertyToDispatchMapper = (dispatch) => ({
     .then(actualModules => dispatch({
       type: "FIND_MODULES_FOR_COURSE",
       modules: actualModules
-    }))
+    })),
+  findLessonsForModule: (moduleId) =>
+    lessonService.findLessonsForModule(moduleId)
+      .then(lessons => dispatch({
+        type: "FIND_LESSONS_FOR_MODULE",
+        lessons,
+        moduleId
+      }))
 })
 
 export default connect
