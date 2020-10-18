@@ -4,7 +4,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Profile from "./Profile";
 import CourseListComponent from "./CourseListComponent";
-import CourseEditorComponent from "./CourseEditorComponent";
+import CourseEditorComponent from "../containers/CourseEditorContainer";
 import CourseGrid from "./CourseGrid";
 
 export class CourseManagerComponent extends React.Component {

@@ -8,7 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
-import CourseEditorComponent from "./components/CourseEditorComponent";
+import CourseEditorComponent from "./containers/CourseEditorContainer";
 import {CourseManagerComponent} from "./components/CourseManagerComponent";
 import HelloContainer from "./containers/HelloContainer";
 import {combineReducers, createStore} from "redux";

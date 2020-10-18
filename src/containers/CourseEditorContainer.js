@@ -1,14 +1,14 @@
 import React from "react";
 import {findCourseById} from "../services/CourseService";
-import WidgetListContainer from "../containers/WidgetListContainer";
-import WidgetList from "./WidgetList";
-import ModuleListComponent from "./ModuleListComponent";
+import WidgetListContainer from "./WidgetListContainer";
+import WidgetList from "../components/WidgetList";
+import ModuleListComponent from "../components/ModuleListComponent";
 import {connect} from "react-redux";
 import moduleService from "../services/ModuleService"
 import lessonService from "../services/LessonService"
-import LessonTabs from "./LessonTabsComponent";
+import LessonTabs from "../components/LessonTabsComponent";
 
-class CourseEditorComponent extends React.Component {
+class CourseEditorContainer extends React.Component {
 
   componentDidMount() {
     const courseId = this.props.match.params.courseId
@@ -72,4 +72,4 @@ const propertyToDispatchMapper = (dispatch) => ({
 
 export default connect
 (stateToPropertyMapper, propertyToDispatchMapper)
-(CourseEditorComponent)
+(CourseEditorContainer)
