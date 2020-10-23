@@ -19,7 +19,7 @@ const WidgetList = ({
     <ul>
       {
         widgets.map(widget =>
-          <li>
+          <li key={widget.id}>
             <button
               onClick={() => deleteWidget(widget)}>
               Delete
@@ -41,6 +41,7 @@ const WidgetList = ({
               !widget.editing &&
                 <span>
                   {widget.name}
+                  {widget.type}
                   <button onClick={() => editWidget(widget)}>
                     Edit
                   </button>

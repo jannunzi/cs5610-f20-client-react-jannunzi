@@ -2,9 +2,11 @@ import React from "react";
 import {lessonReducer} from "../reducers/lessonReducer";
 import {connect} from "react-redux";
 import lessonService from "../services/LessonService";
+import {Link} from "react-router-dom";
 
 const LessonTabs = (
   {
+    course,
     moduleId,
     lessons=[],
     createLessonForModule,
@@ -17,7 +19,7 @@ const LessonTabs = (
       {
         lessons.map(lesson =>
           <li key={lesson._id} className="nav-item">
-            <a class="nav-link">
+            <Link to={`/edit/${course._id}/modules/${moduleId}/lessons/${lesson._id}`} className="nav-link">
             <button onClick={() => deleteLesson(lesson._id)}>
               <i className="fa fa-times"></i>
             </button>
@@ -43,7 +45,7 @@ const LessonTabs = (
                     <input value={lesson.title}/>
                   </span>
               }
-            </a>
+            </Link>
           </li>
         )
       }
@@ -54,6 +56,7 @@ const LessonTabs = (
   </div>
 
 const stateToPropertyMapper = (state) => ({
+  course: state.courseReducer.course,
   lessons: state.lessonReducer.lessons,
   moduleId: state.lessonReducer.moduleId
 })

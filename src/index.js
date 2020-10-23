@@ -20,10 +20,12 @@ import widgetsReducer from "./reducers/widgetsReducer";
 import moduleReducer from "./reducers/moduleReducer";
 import courseReducer from "./reducers/courseReducer";
 import {lessonReducer} from "./reducers/lessonReducer";
+import {topicReducer} from "./reducers/topicReducer";
 import "font-awesome/css/font-awesome.min.css";
 
 const reducers = combineReducers({
-  fsm, widgetsReducer, moduleReducer, courseReducer, lessonReducer
+  fsm, widgetsReducer, moduleReducer, courseReducer, lessonReducer,
+  topicReducer
 })
 const store = createStore(reducers)
 
