@@ -6,6 +6,11 @@ const initialState = {
 
 const widgetReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "FIND_WIDGETS_FOR_TOPIC":
+      return {
+        ...state,
+        widgets: action.widgets
+      }
     case "FIND_ALL_WIDGETS":
       return {
         ...state,

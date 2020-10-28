@@ -17,6 +17,7 @@ class CourseEditorContainer extends React.Component {
     const courseId = this.props.match.params.courseId
     const moduleId = this.props.match.params.moduleId
     const lessonId = this.props.match.params.lessonId
+    const topicId = this.props.match.params.topicId
     this.props.findCourseById(courseId)
     this.props.findModulesForCourse(courseId)
     if(moduleId) {
@@ -25,8 +26,11 @@ class CourseEditorContainer extends React.Component {
     if(lessonId) {
       this.props.findTopicsForLesson(lessonId)
     }
+    if(topicId) {
+      this.props.findWidgetsForTopic(topicId)
+    }
 
-    this.props.findAllWidgets()
+    // this.props.findAllWidgets()
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -34,11 +38,15 @@ class CourseEditorContainer extends React.Component {
     const courseId = this.props.match.params.courseId
     const moduleId = this.props.match.params.moduleId
     const lessonId = this.props.match.params.lessonId
+    const topicId = this.props.match.params.topicId
     if(moduleId !== prevProps.match.params.moduleId) {
       this.props.findLessonsForModule(moduleId)
     }
     if(lessonId !== prevProps.match.params.lessonId) {
       this.props.findTopicsForLesson(lessonId)
+    }
+    if(topicId) {
+      this.props.findWidgetsForTopic(topicId)
     }
 
   }
@@ -67,6 +75,12 @@ const stateToPropertyMapper = (state) => ({
 })
 
 const propertyToDispatchMapper = (dispatch) => ({
+  findWidgetsForTopic: (topicId) =>
+    widgetService.findWidgetsForTopic(topicId)
+      .then(widgets => dispatch({
+        type: "FIND_WIDGETS_FOR_TOPIC",
+        widgets
+      })),
   findAllWidgets: () =>
     widgetService.findAllWidgets()
       .then(widgets => dispatch({

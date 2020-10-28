@@ -6,6 +6,8 @@ import {
   updateWidget,
   editWidget,
   okWidget} from "../actions/widgetActions";
+import HeadingWidget from "./widgets/HeadingWidget";
+import ParagraphWidget from "./widgets/ParagraphWidget";
 
 const WidgetList = ({
   widgets=[],
@@ -41,7 +43,14 @@ const WidgetList = ({
               !widget.editing &&
                 <span>
                   {widget.name}
-                  {widget.type}
+                  {
+                    widget.type === "HEADING" &&
+                    <HeadingWidget/>
+                  }
+                  {
+                    widget.type === "PARAGRAPH" &&
+                    <ParagraphWidget/>
+                  }
                   <button onClick={() => editWidget(widget)}>
                     Edit
                   </button>
